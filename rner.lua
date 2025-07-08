@@ -71,7 +71,7 @@ Tabs.Main:Button({
         local player = Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local rootPart = character:WaitForChild("HumanoidRootPart")
-        local targetPosition = Vector3.new(-55.1, 1023.1, -527.6)
+        local targetPosition = Vector3.new(-45, 1026, -136.70)
         rootPart.CFrame = CFrame.new(targetPosition)
     end
 })
