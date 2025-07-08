@@ -57,7 +57,7 @@ OriginalNamecall = hookfunction(getrawmetatable(game).__namecall, newcclosure(fu
 end))
 
 Tabs.Main:Toggle({
-    Text = "Red Light God Mode",
+    Title = "Red Light God Mode",
     Default = false,
     Callback = function(state)
         RedLightGodModeEnabled = state
@@ -65,7 +65,7 @@ Tabs.Main:Toggle({
 })
 
 Tabs.Main:Button({
-    Text = "Teleport to End",
+    Title = "Teleport to End",
     Callback = function()
         local Players = game:GetService("Players")
         local player = Players.LocalPlayer
