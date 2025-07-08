@@ -30,6 +30,7 @@ Window:EditOpenButton({
 local Tabs = {
     Main = Window:Tab({ Title = "Main", Icon = "house" }),
     Player = Window:Tab({ Title = "Player", Icon = "user" }),
+    Mingle = Window:Tab({ Title = "Mingle", Icon = "users" }),
     Credits = Window:Tab({ Title = "Credits", Icon = "award" }),
 }
 
@@ -88,9 +89,19 @@ Tabs.Player:Toggle({
     end
 })
 
+Tabs.Mingle:Section({ Title = "Mingle Features" })
+Tabs.Mingle:Toggle({
+    Title = "Power Hold Auto",
+    Value = getgenv().Toggles.MinglePowerHoldAuto or false,
+    Callback = function(state)
+        getgenv().Toggles.MinglePowerHoldAuto = state
+    end
+})
+
 Tabs.Credits:Section({ Title = "Credits" })
+
 Tabs.Credits:Button({
-    Title = "Script by RINGTA JOIN DC!",
+    Title = "Script",
     Icon = "award",
     Callback = function() end
 })
@@ -273,16 +284,57 @@ function PlayerMods:Destroy()
     if self._NoclipConn then self._NoclipConn:Disconnect() end
 end
 
+local Mingle = {}
+Mingle.__index = Mingle
+function Mingle.new()
+    local self = setmetatable({}, Mingle)
+    return self
+end
+function Mingle:Start()
+    local Client = LocalPlayer
+    local function OnCharacterAdded(Character)
+        local function OnRemoteForQTEAdded(RemoteForQTE)
+            local running = true
+            task.spawn(function()
+                while task.wait(0.5) do
+                    if not RemoteForQTE or not RemoteForQTE.Parent then break end
+                    if getgenv().Toggles and getgenv().Toggles.MinglePowerHoldAuto then
+                        RemoteForQTE:FireServer()
+                    end
+                end
+            end)
+        end
+        local function OnChildAdded(Object)
+            if Object.ClassName == "RemoteEvent" and Object.Name == "RemoteForQTE" then
+                OnRemoteForQTEAdded(Object)
+            end
+        end
+        Character.ChildAdded:Connect(OnChildAdded)
+        for _, Object in ipairs(Character:GetChildren()) do
+            task.spawn(OnChildAdded, Object)
+        end
+    end
+    LocalPlayer.CharacterAdded:Connect(OnCharacterAdded)
+    if LocalPlayer.Character then
+        task.spawn(OnCharacterAdded, LocalPlayer.Character)
+    end
+end
+function Mingle:Destroy()
+end
+
 local GameState = workspace:WaitForChild("Values")
 local Features = {
     ["RedLightGreenLight"] = RedLightGreenLight,
     ["Dalgona"] = Dalgona,
     ["TugOfWar"] = TugOfWar,
-    ["GlassBridge"] = GlassBridge
+    ["GlassBridge"] = GlassBridge,
+    ["Mingle"] = Mingle,
 }
 local CurrentRunningFeature = nil
 local PlayerModsInstance = PlayerMods.new()
 PlayerModsInstance:Start()
+local MingleInstance = Mingle.new()
+MingleInstance:Start()
 local function CleanupCurrentFeature()
     if CurrentRunningFeature then
         CurrentRunningFeature:Destroy()
@@ -298,4 +350,3 @@ local function CurrentGameChanged()
 end
 GameState.CurrentGame:GetPropertyChangedSignal("Value"):Connect(CurrentGameChanged)
 CurrentGameChanged()
-Window:SelectTab(1)
