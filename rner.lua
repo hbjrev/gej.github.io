@@ -12,7 +12,7 @@ local Window = WindUI:CreateWindow({
     Author = "discord.gg/ringta",
     Theme = "Dark",
     Size = UDim2.fromOffset(500, 350),
-    Transparent = true,
+    Transparent = false,
     HasOutline = true,
 })
 
