@@ -27,7 +27,7 @@ Window:EditOpenButton({
 
 local Tabs = {
     Main = Window:Tab({ Title = "RedLight", Icon = "house" }),
-    Player = Window:Tab({ Title = "Mingle", Icon = "user" }),
+    Player = Window:Tab({ Title = "Dalgona", Icon = "user" }),
     Mingle = Window:Tab({ Title = "Mingle", Icon = "users" }),
     Credits = Window:Tab({ Title = "Credits", Icon = "award" }),
 }
