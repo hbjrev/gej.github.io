@@ -78,7 +78,7 @@ Tabs.Main:Button({
 
 
 Tabs.Main:Button({
-    Text = "Help Player",
+    Title = "Help Player",
     Callback = function()
         local Players = game:GetService("Players")
         local LocalPlayer = Players.LocalPlayer
@@ -164,7 +164,7 @@ end
 
 
 Tabs.Player:Button({
-    Text = "Auto Complete Dalgona",
+    Title = "Auto Complete Dalgona",
     Callback = function()
         CompleteDalgona()
     end
