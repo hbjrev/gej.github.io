@@ -28,8 +28,8 @@ Window:EditOpenButton({
 local Tabs = {
     Main = Window:Tab({ Title = "RedLight", Icon = "house" }),
     Player = Window:Tab({ Title = "Dalgona", Icon = "user" }),
-    Mingle = Window:Tab({ Title = "Mingle", Icon = "users" }),
-    Credits = Window:Tab({ Title = "Credits", Icon = "award" }),
+    Mingle = Window:Tab({ Title = "Tug Of War", Icon = "users" }),
+    Credits = Window:Tab({ Title = "Hide And Seek", Icon = "award" }),
 }
 
 local RedLightGodModeEnabled = false -- Default: off
